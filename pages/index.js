@@ -11,7 +11,7 @@ const previewImages = [
   { src: '/previews/preview-8.png', alt: 'caffy home glass view' }
 ];
 
-const vibePills = ['cozy social', 'latte aesthetic', 'non-toxic', 'swiftui + supabase'];
+const vibePills = ['cozy social', 'latte aesthetic', 'non-toxic'];
 
 export default function Home() {
   const [activePreview, setActivePreview] = useState(0);

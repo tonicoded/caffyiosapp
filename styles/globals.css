@@ -56,6 +56,8 @@ main::after {
   gap: clamp(32px, 6vw, 72px);
   align-items: center;
   min-height: calc(100vh - clamp(120px, 10vw, 220px));
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .copy-col {
@@ -169,7 +171,6 @@ main::after {
 .phone-card {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
   width: min(320px, 70vw);
   border-radius: 40px;
   padding: 26px 18px 32px;
@@ -177,17 +178,21 @@ main::after {
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 40px 70px rgba(0, 0, 0, 0.55);
   transition: transform 0.6s ease, opacity 0.6s ease;
+  transform-origin: center;
 }
 
 .phone-card.secondary {
   top: -40px;
-  transform: translateX(calc(-50% - 60px)) scale(0.9);
   opacity: 0.55;
+  transform: translateX(calc(-50% - 60px)) scale(0.9);
+  animation: floatSecondary 9s ease-in-out infinite;
 }
 
 .phone-card.primary {
   top: 40px;
   z-index: 2;
+  transform: translateX(-50%);
+  animation: floatPrimary 8s ease-in-out infinite;
 }
 
 .phone-screen {
@@ -226,6 +231,59 @@ main::after {
   background: var(--amber);
 }
 
+@keyframes floatPrimary {
+  0% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-12px) scale(1.01);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+}
+
+@keyframes floatSecondary {
+  0% {
+    transform: translateX(calc(-50% - 60px)) translateY(0) scale(0.9);
+  }
+  50% {
+    transform: translateX(calc(-50% - 60px)) translateY(10px) scale(0.88);
+  }
+  100% {
+    transform: translateX(calc(-50% - 60px)) translateY(0) scale(0.9);
+  }
+}
+
+.pill {
+  position: relative;
+  overflow: hidden;
+}
+
+.pill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.3s ease, transform 0.6s ease;
+}
+
+.pill:hover::after {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phone-card.primary,
+  .phone-card.secondary,
+  .pill::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 @media (max-width: 960px) {
   .hero-shell {
     grid-template-columns: 1fr;
@@ -235,10 +293,14 @@ main::after {
     order: 2;
     align-items: center;
     margin-top: clamp(40px, 10vw, 80px);
+    text-align: center;
   }
   .copy-col img,
   .tagline::before {
     margin: 0 auto;
+  }
+  .tagline {
+    justify-content: center;
   }
   .pill-bank {
     justify-content: center;
