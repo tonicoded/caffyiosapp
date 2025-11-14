@@ -79,7 +79,7 @@ function DeviceStack({ primary, secondary, active, onSelect }) {
         <div className="phone-card primary">
           <div className="phone-screen">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={primary.src} alt={primary.alt} />
+            <img key={primary.src} src={primary.src} alt={primary.alt} className="preview-image" />
           </div>
         </div>
         <div className="preview-dots" role="tablist" aria-label="app preview selector">
