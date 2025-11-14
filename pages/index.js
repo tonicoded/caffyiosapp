@@ -1,39 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 
 const previewImages = [
-  { src: '/previews/preview-1.png', alt: 'caffy live feed preview' },
+  { src: '/previews/preview-1.png', alt: 'caffy feed preview' },
   { src: '/previews/preview-2.png', alt: 'caffy streaks preview' },
   { src: '/previews/preview-3.png', alt: 'caffy analytics preview' },
   { src: '/previews/preview-4.png', alt: 'caffy logger preview' },
   { src: '/previews/preview-5.png', alt: 'caffy circles preview' },
-  { src: '/previews/preview-6.png', alt: 'caffy stats preview' },
+  { src: '/previews/preview-6.png', alt: 'caffy stats deep dive' },
   { src: '/previews/preview-7.png', alt: 'caffy onboarding preview' },
-  { src: '/previews/preview-8.png', alt: 'caffy home view preview' }
+  { src: '/previews/preview-8.png', alt: 'caffy home glass view' }
 ];
 
-const ideaPoints = [
-  'log coffees with photo drops, handles, and cozy stats.',
-  'share a glassy feed with reactions, pings, and one circle for free.',
-  'unlock pro for world map, advanced analytics, custom types, and premium themes.',
-  'built with swiftui + supabase · launching via testflight + product hunt.'
-];
-
-const featureHighlights = [
-  {
-    title: 'core idea',
-    copy: 'caffy treats coffee as a ritual, not a calorie. it makes every cup shareable, trackable, and social.'
-  },
-  {
-    title: 'why it sticks',
-    copy: 'daily habit + cute streaks + glass ui = retention. social loops + pro perks = revenue.'
-  },
-  {
-    title: 'mvp in 4 weeks',
-    copy: 'week 1 ui/auth/logging · week 2 feed/map/circle · week 3 stats/profile · week 4 polish + beta.'
-  }
-];
-
-const pillLabels = ['cozy', 'social', 'latte aesthetic', 'non-toxic', 'glass ui'];
+const vibePills = ['cozy social', 'latte aesthetic', 'non-toxic', 'swiftui + supabase'];
 
 export default function Home() {
   const [activePreview, setActivePreview] = useState(0);
@@ -41,75 +19,82 @@ export default function Home() {
   useEffect(() => {
     const id = setInterval(() => {
       setActivePreview((prev) => (prev + 1) % previewImages.length);
-    }, 3200);
+    }, 3500);
     return () => clearInterval(id);
   }, []);
 
-  const phoneImage = useMemo(() => previewImages[activePreview], [activePreview]);
+  const primaryPreview = useMemo(() => previewImages[activePreview], [activePreview]);
+  const secondaryPreview = useMemo(
+    () => previewImages[(activePreview + 2) % previewImages.length],
+    [activePreview]
+  );
 
   return (
     <main>
-        <div className="background-glow one" />
-        <div className="background-glow two" />
-        <section className="canvas">
-          <div className="hero-panel">
+      <section className="hero-shell">
+        <div className="copy-col">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="caffy logo" width={90} height={90} />
-          <p className="eyebrow">cozy coffee logging</p>
-          <h1 className="hero-title">caffy — where coffee becomes memories</h1>
-          <p className="hero-sub">
-            a warm, latte-toned lifestyle app for logging every cup, mapping cafés with friends, and
-            keeping streaks alive without the techy noise.
+          <img src="/logo.png" alt="caffy logo" width={86} height={86} />
+          <span className="tagline">cozy coffee logging</span>
+          <h1 className="hero-title">caffy · brew memories together</h1>
+          <p className="hero-lede">
+            a glassy coffee diary that turns every cup into a shareable ritual with streaks, maps, and
+            zero-stress vibes.
           </p>
-          <div className="pill-row">
-            {pillLabels.map((label) => (
-              <span className="pill" key={label}>{label}</span>
+
+          <div className="pill-bank">
+            {vibePills.map((pill) => (
+              <span key={pill} className="pill">{pill}</span>
             ))}
           </div>
 
-          <ul className="idea-points">
-            {ideaPoints.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-
-          <div className="whitelist-block">
-            <p className="whitelist-label">join the early pour waitlist</p>
+          <div className="waitlist-panel">
+            <p className="waitlist-label">join the early pour waitlist</p>
             <LaunchListWidget />
-            <p className="whitelist-note">early beta invites, zero spam.</p>
-          </div>
-
-          <div className="feature-grid">
-            {featureHighlights.map((feature) => (
-              <div className="feature-card" key={feature.title}>
-                <span>{feature.title}</span>
-                <p>{feature.copy}</p>
-              </div>
-            ))}
+            <p className="waitlist-note">first 500 beta testers unlock pro map + latte themes.</p>
           </div>
         </div>
 
-        <div className="showcase-panel">
-          <div className="phone-shell" aria-live="polite">
-            <div className="phone-screen">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={phoneImage.src} alt={phoneImage.alt} />
-            </div>
-          </div>
-          <div className="preview-dots" role="tablist" aria-label="app preview selector">
-            {previewImages.map((_, index) => (
-              <button
-                key={_.src}
-                type="button"
-                className={index === activePreview ? 'active' : ''}
-                onClick={() => setActivePreview(index)}
-                aria-label={`show preview ${index + 1}`}
-              />
-            ))}
-            </div>
-          </div>
+        <DeviceStack
+          primary={primaryPreview}
+          secondary={secondaryPreview}
+          active={activePreview}
+          onSelect={setActivePreview}
+        />
       </section>
     </main>
+  );
+}
+
+function DeviceStack({ primary, secondary, active, onSelect }) {
+  return (
+    <div className="device-col">
+      <div className="device-stack">
+        <div className="phone-card secondary">
+          <div className="phone-screen">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={secondary.src} alt={secondary.alt} />
+          </div>
+        </div>
+        <div className="phone-card primary">
+          <div className="phone-screen">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={primary.src} alt={primary.alt} />
+          </div>
+        </div>
+        <div className="preview-dots" role="tablist" aria-label="app preview selector">
+          {previewImages.map((_, index) => (
+            <button
+              key={_.src}
+              type="button"
+              className={index === active ? 'active' : ''}
+              onClick={() => onSelect(index)}
+              aria-label={`show preview ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -123,9 +108,7 @@ function LaunchListWidget() {
   useEffect(() => {
     if (!mounted) return;
     const scriptId = 'launchlist-widget-script';
-    if (document.getElementById(scriptId)) {
-      return;
-    }
+    if (document.getElementById(scriptId)) return;
     const script = document.createElement('script');
     script.id = scriptId;
     script.src = 'https://getlaunchlist.com/js/widget.js';
