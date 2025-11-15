@@ -2,96 +2,154 @@ import Head from "next/head";
 import React from "react";
 
 const TermsPage: React.FC = () => {
+  const sections = [
+    {
+      title: "Use of Caffy",
+      body: (
+        <p>
+          Caffy is a social coffee journal for personal use. You agree to keep
+          your account secure, avoid spam or abusive behavior, and follow any
+          cafe/local laws when logging or sharing content.
+        </p>
+      ),
+    },
+    {
+      title: "Accounts & Security",
+      body: (
+        <p>
+          You are responsible for the Apple ID or other credentials connected to
+          Caffy. Notify us immediately if your device or account may be
+          compromised so we can help secure it.
+        </p>
+      ),
+    },
+    {
+      title: "Content & Intellectual Property",
+      body: (
+        <p>
+          You own the photos, notes, and logs you create. You grant Caffy a
+          license to display that content inside the app so your analytics,
+          atlas pins, and social feeds function. We may remove content that
+          violates these terms or applicable law.
+        </p>
+      ),
+    },
+    {
+      title: "Location Features",
+      body: (
+        <p>
+          Location tagging is optional. When enabled, you consent to sharing the
+          approximate location of your log to power the map and friend
+          experiences. Disable permissions in iOS at any time to stop sharing
+          new data.
+        </p>
+      ),
+    },
+    {
+      title: "Changes & Availability",
+      body: (
+        <p>
+          Caffy may evolve over time. We can modify these terms, features, or
+          discontinue parts of the service. Continued use after updates means
+          you accept the revised terms.
+        </p>
+      ),
+    },
+  ];
+
   return (
     <>
       <Head>
         <title>Caffy — Terms of Service</title>
         <meta
           name="description"
-          content="Read the terms that govern your use of the Caffy mobile app and website."
+          content="Review the terms that govern your use of the Caffy app and website."
         />
       </Head>
-      <main className="legal-page">
-        <section>
+      <main className="legal">
+        <div className="legal__hero">
+          <p className="eyebrow">terms &amp; conduct</p>
           <h1>Terms of Service</h1>
           <p>
-            Welcome to Caffy. By creating an account or using the app you agree
-            to these terms. If you disagree, do not use the service.
+            These terms outline your rights and responsibilities when using
+            Caffy. Please read them carefully—by logging a coffee, you agree to
+            everything on this page.
           </p>
-        </section>
+        </div>
 
-        <section>
-          <h2>Use of the App</h2>
-          <p>
-            Caffy is a social coffee journal meant for personal, non-commercial
-            use. You promise to log truthful content, respect community
-            guidelines, and refrain from spam, harassment, or reverse
-            engineering.
-          </p>
-        </section>
-
-        <section>
-          <h2>Accounts & Security</h2>
-          <p>
-            You are responsible for safeguarding your Apple ID or any linked
-            login credentials. Notify us immediately if you suspect unauthorized
-            access.
-          </p>
-        </section>
-
-        <section>
-          <h2>Content</h2>
-          <p>
-            You own your coffee logs and grant Caffy a license to display them
-            within the app. We may remove content that violates these terms or
-            local laws.
-          </p>
-        </section>
-
-        <section>
-          <h2>Location Features</h2>
-          <p>
-            Location tagging is optional. When enabled, you consent to sharing
-            approximate coordinates to power the global map and friend feeds.
-          </p>
-        </section>
-
-        <section>
-          <h2>Changes</h2>
-          <p>
-            We may update these terms. Continued use after changes means you
-            accept the revised terms.
-          </p>
-        </section>
-
-        <section>
-          <h2>Contact</h2>
-          <p>
-            Questions? Email <a href="mailto:legal@caffy.app">legal@caffy.app</a>
-            .
-          </p>
-        </section>
+        <div className="legal__content">
+          {sections.map((section) => (
+            <section key={section.title} className="legal__card">
+              <h2>{section.title}</h2>
+              {section.body}
+            </section>
+          ))}
+          <section className="legal__card">
+            <h2>Contact</h2>
+            <p>
+              Need clarification? Email{" "}
+              <a href="mailto:anthonyvvza@gmail.com">anthonyvvza@gmail.com</a>.
+            </p>
+          </section>
+        </div>
       </main>
       <style jsx>{`
-        .legal-page {
-          max-width: 720px;
-          margin: 0 auto;
-          padding: 4rem 1.5rem 6rem;
-          font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-            sans-serif;
-          color: #1f1b16;
-          line-height: 1.6;
+        .legal {
+          min-height: 100vh;
+          padding: 5rem 1.5rem 6rem;
+          color: #fefcf8;
+          background: radial-gradient(
+              circle at top,
+              rgba(255, 234, 209, 0.18),
+              transparent 55%
+            ),
+            linear-gradient(135deg, #1b120c 0%, #352013 60%, #20130c 100%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
-        h1 {
-          font-size: 2.5rem;
-          margin-bottom: 0.75rem;
+        .legal__hero {
+          max-width: 760px;
+          text-align: center;
+          margin-bottom: 2.5rem;
         }
-        h2 {
-          margin-top: 2.5rem;
+        .eyebrow {
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.7);
           margin-bottom: 0.5rem;
         }
-        section + section {
-          margin-top: 1rem;
+        h1 {
+          font-size: clamp(2.5rem, 6vw, 3.25rem);
+          margin-bottom: 1rem;
+        }
+        .legal__hero p {
+          color: rgba(255, 255, 255, 0.78);
+          font-size: 1.05rem;
+          line-height: 1.7;
+        }
+        .legal__content {
+          width: 100%;
+          max-width: 900px;
+          display: grid;
+          gap: 1.5rem;
+        }
+        .legal__card {
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 24px;
+          padding: 1.75rem;
+          backdrop-filter: blur(14px);
+          box-shadow: 0 20px 60px rgba(10, 5, 0, 0.35);
+        }
+        h2 {
+          margin-bottom: 0.75rem;
+          font-size: 1.35rem;
+        }
+        a {
+          color: #ffd7a8;
+          text-decoration: underline;
         }
       `}</style>
     </>
